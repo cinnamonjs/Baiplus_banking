@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="Asset/css/swiper-bundle.min.css">
+    <script src="https://kit.fontawesome.com/a81368914c.js"></script>
+    <!-- css -->
+    <link rel="stylesheet" href="Asset/css/style.css">
+    <!-- incon -->
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+    <link rel="stylesheet"href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+    <link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/solid.css">
+    <!-- ไอคอนบนแท็บ -->
+    <link rel="shortcut icon" href="Asset/img/Baiplus_final-removebg-preview.png">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        /* Popup Styles */
+        .popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: #000;
+            z-index: 9999;
+        }
+
+        .popup-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            width: 300px;
+            height: 200px;
+            padding: 20px;
+            background-color: #fff;
+            color: #000;
+            border-radius: 10px;
+            position: relative;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .popup h3 {
+            margin-bottom: 10px;
+            color: #000;
+        }
+
+        .popup p {
+            margin-bottom: 20px;
+        }
+
+        .popup .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #4caf50;
+            color: #000;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+
+
+	<nav>
+        <div class="nav-bar home__containter">
+           
+              <a href="index.html" class="logo"><img src="Asset/img/Baiplus_final-removebg-preview.png" class="nav__icon" alt="" /></i>BaiPlus</a>
+           
+              <input type="checkbox" name="" id="menu">
+              <label for="menu"><i class='bx bx-menu' id="menu-icon" ></i></label>
+    
+              <ul class="navbar">
+                  <li><a href="index.html">Home</a></li>
+                  <li><a href="index.html">ABOUT</a></li>
+                 
+
+                  <li class="nav__btns">           
+                    <i class="uil uil-moon change-theme" id="theme-button"></i>
+                  </li>
+                
+                  <div class="home__action">
+                      <!-- <a href="log-in.html" class="nav__btn">Log In</a> -->
+                      <a href="log-in.html" class="nav__btn">Log in</a>
+                  </div>
+              </ul>
+          </div>
+
+      </nav>
+
+
+
+
+	<img class="signup__img" src="Asset/img/tree.Brabch.svg">
+	<div class="login__container">
+		<div class="signup__img-2">
+			<img src="Asset/img/tree.Brabch.svg">
+		</div>
+		<div class="login-content">
+			<form action="sign-up.php" class="signup__form"  method="POST" enctype="multipart/form-data">
+				<!-- <img src="Asset/img/avatar.svg"> -->
+				<h2 class="section__title">Welcome , Lets get started</h2>
+            <div class="section__subtitle signup__grid2">
+                <p>Already have account ?</p><a href="log-in.html" class="signup__btn-link"> Log In</a>
+            </div>
+                <div class="signup__grid2">
+                <!-- =============== input 1 =================== -->
+                <div class="signup__grid-box1">
+           		<div class="input-div one">
+           		   <div class="i">
+           		   		<i class="fas fa-user"></i>
+           		   </div>
+           		   <div class="div">
+           		   		<h5>Firstname</h5>
+           		   		<input type="text" class="login__input" name="customer_fname">
+           		   </div>
+           		</div><!-- signup__grid-box -->
+                </div>
+                 <!-- =============== input 1 =================== -->
+                <div class="signup__grid-box2">
+                    <div class="input-div pass ">
+                        <div class="i"> 
+                                <!-- <i class="fas fa-lock"></i> -->
+                        </div>
+                    <div class="div">
+                        <h5>Lastname</h5>
+                        <input type="text" class="login__input" name="customer_lname">
+                    </div>
+                </div>
+                </div><!-- signup__grid-box -->
+                </div><!-- signup__name -->
+
+                <!-- =============== input 1 =================== -->
+                <div class="input-div one">
+                    <div class="i">
+                        <i class="fa-sharp fa-solid fa-envelope"></i>
+                    
+                    </div>
+                    <div class="div">
+                            <h5>Email</h5>
+                            <input type="email" name="customer_email" class="login__input" id="" required>
+                    </div>
+                 </div>
+                 <!-- =============== input 1 =================== -->
+                 <div class="input-div pass">
+                    <div class="i"> 
+                        <i class="fa-sharp fa-solid fa-phone"></i>
+                    </div>
+                    <div class="div">
+                         <h5>Phone number</h5>
+                         <input type="tel" name="customer_phone" id="" class="login__input" required>
+                 </div>
+              </div>
+            	
+
+              <br> <!-- =============== input 1 =================== -->
+              <div class="input-div one">
+                  <div class="i">
+                    <i class="fas fa-lock"></i> 
+                  </div>
+                  <div class="div">
+                          <h5>Password</h5>
+                          <input type="password" name="customer_password" class="login__input" id="" required>
+                  </div>
+               </div>
+               <!-- =============== input 1 =================== -->
+               <div class="input-div pass">
+                <div class="i"> 
+                    <i class="fa-sharp fa-solid fa-id-card"></i> 
+                </div>
+                <div class="div">
+                     <h5>Personal ID</h5>
+                     <input type="text" name="customer_ID" id="" class="login__input" required>
+             </div>
+          </div>
+            
+            <br> <!-- =============== input 1 =================== -->
+            <div class="input-div one">
+                <div class="i">
+                    <i class="fa-sharp fa-solid fa-id-card"></i>
+                </div>
+                <div class="div">
+                    <h5>Personal ID (Back)</h5>
+                    <input type="text" name="card_code" class="login__input" required>
+                </div>
+             </div>
+
+
+
+          <!-- =============== input pin =================== -->
+          <div class="input-div one">
+            <div class="i">
+                <i class="fa-sharp fa-solid fa-map-location-dot"></i>
+            </div>
+            <div class="div">
+                    <h5>Address</h5>
+                    <input type="text" name="customer_address" class="login__input" id="" required>
+            </div>
+         </div>
+           <!-- =============== input pin2 =================== -->
+           <div class="input-div pass">
+            <div class="i"> 
+                <i class="fa-sharp fa-solid fa-signs-post"></i>
+            </div>
+            <div class="div">
+                 <h5>Post code</h5>
+                 <input type="tel" maxlength="5" name="customer_postcode" customer_postcode class="login__input"  required>
+         </div>
+      </div>
+
+
+          <br> <!-- =============== input pin =================== -->
+          <div class="input-div one">
+            <div class="i">
+                <i class="fa-sharp fa-solid fa-key"></i>
+            </div>
+            <div class="div">
+                    <h5>Pin</h5>
+                    <input type="password" name="account_pin"maxlength="6"  class="login__input" id="" required>
+            </div>
+         </div>
+         <div class="input-div pass">
+            <div class="i"> 
+                <i class="uis uis-calender"></i>
+            </div>
+            <div class="div">
+                 <!-- <h5 >Date of Brith</h5> -->
+                 <input type="date" class="login__input" name="customer_DOB" id="" required>
+         </div>
+        </div>
+<br>
+
+        
+      <fieldset class="gender-box">
+        <h3 class="signup__topic">Gender</h3>
+        <div class="signup__gender">
+        <div class="signup__gender-box">
+          <input type="radio" id="male" name="customer_gender" value="Male"
+                 checked>
+          <label for="male">Male</label>
+        </div>
+    
+        <div class="signup__gender-box">
+          <input type="radio" id="female" name="customer_gender" value="Female">
+          <label for="female" >Female</label>
+        </div>
+    
+        </div>
+    </fieldset>
+
+      <br> <!-- =============== input salary =================== -->
+      <div class="input-div one">
+        <div class="i">
+            <i class="fa-sharp fa-solid fa-hand-holding-dollar"></i>
+        </div>
+        <div class="div">
+                <h5>Salary</h5>
+                <input type="password" name="salary" class="login__input" id="" required>
+        </div>
+     </div>
+       <!-- =============== input salary file =================== -->
+       <div class="input-div pass">
+        <div class="i"> 
+            <i class="fa-sharp fa-solid fa-file-invoice-dollar"></i>
+        </div>
+        <div class="div ">
+             <h5>Salary file</h5>
+             <input type="file"  class="login__input" name ='salary_file'>
+     </div>
+  </div>
+
+
+            	<input type="submit" class="login__btn" value="Sign up">
+                <!-- <div class="info"> OR </div>
+
+                
+                    <a href="log-in.html" class="signup__btn" value="log in">log in</a> -->
+                
+            </form>
+        </div>
+    </div>
+    <script type="text/javascript" src="Asset/js/login.js"></script>
+
+    <div class="popup" id="success-popup">
+        <div class="popup-content">
+            <h3>Successful</h3>
+            <p>You have successfully register !!.</p>
+            <a href="log-in.html" class="btn">Continue</a>
+        </div>
+    </div>
+
+    <!-- Failure Popup -->
+    <div class="popup" id="failure-popup">
+        <div class="popup-content">
+            <h3>Failed</h3>
+            <p>This person Already have an account. Please try again.</p>
+            <button class="btn" onclick="closePopup()">Close</button>
+        </div>
+    </div>
+
+    <!-- Failure 2 Popup -->
+    <div class="popup" id="failure-popup2">
+        <div class="popup-content">
+            <h3>Failed</h3>
+            <p>Post code dosen't exits. Please try again.</p>
+            <button class="btn" onclick="closePopup()">Close</button>
+        </div>
+    </div>
+    
+    <script type="text/javascript" src="Asset/js/login.js"></script>
+    <script>
+        // Show the success or failure popup based on the query parameter 'status'
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const status = urlParams.get('status');
+
+            if (status === 'success') {
+                document.getElementById('success-popup').style.display = 'flex';
+            } else if (status === 'failure') {
+                document.getElementById('failure-popup').style.display = 'flex';
+            }
+            else if (status === 'failure2') {
+                document.getElementById('failure-popup2').style.display = 'flex';
+            }
+        };
+
+        // Function to close the failure popup
+        function closePopup() {
+            document.getElementById('failure-popup').style.display = 'none';
+            document.getElementById('failure-popup2').style.display = 'none';
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://kit.fontawesome.com/a81368914c.js" ></script>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="Asset/css/swiper-bundle.min.css">
+
+    <!-- css -->
+    <link rel="stylesheet" href="Asset/css/style.css">
+    <!-- incon -->
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+    <!-- ไอคอนบนแท็บ -->
+    <link rel="shortcut icon" href="assets/img/myProfile.png">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <style>
+        /* Popup Styles */
+        .popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: #000;
+            z-index: 9999;
+        }
+
+        .popup-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            width: 300px;
+            height: 200px;
+            padding: 20px;
+            background-color: #fff;
+            color: #000;
+            border-radius: 10px;
+            position: relative;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .popup h3 {
+            margin-bottom: 10px;
+            color: #000;
+        }
+
+        .popup p {
+            margin-bottom: 20px;
+        }
+
+        .popup .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #4caf50;
+            color: #000;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-bar home__containter">
+            <a href="index.html" class="logo">
+                <img src="Asset/img/Baiplus_final-removebg-preview.png" class="nav__icon" alt="" />
+                BaiPlus
+            </a>
+           
+            <ul class="navbar">
+                <li><a href="index.html">Home</a></li>
+    
+                <li class="nav__btns">
+                    <i class="uil uil-moon change-theme" id="theme-button"></i>
+                </li>
+                <div class="home__action">
+                    <a href="sign-up.html" class="nav__btn">Sign up</a>
+                </div>
+            </ul>
+        </div>
+    </nav>
+    <img class="wave" src="Asset/img/Baiplus_final-removebg-preview.png">
+    <div class="login__container">
+        <div class="img">
+            <img src="Asset/img/bg.svg">
+        </div>
+        <div class="login-content">
+            <form action="log-in.php" class="login__form" method="POST" >
+                <img src="Asset/img/avatar.svg">
+                <h2 class="title">Welcome</h2>
+                <div class="input-div one">
+                    <div class="i">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="div">
+                        <h5>Username</h5>
+                        <input type="text" name="customer_ID" class="login__input" id="username" required>
+                    </div>
+                </div>
+                <div class="input-div pass">
+                    <div class="i">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <div class="div">
+                        <h5>Password</h5>
+                        <input type="password" name="customer_password" class="login__input" id="password" required>
+                    </div>
+                </div>
+                <a href="#" class="forgot__pasword">Forgot Password?</a>
+                <input type="submit" class="login__btn" value="Login">
+            </form>
+        </div>
+    </div>
+
+    <div class="popup" id="success-popup">
+        <div class="popup-content">
+            <h3>Login Successful</h3>
+            <p>You have successfully logged in.</p>
+            <a href="account__main.php" class="btn">Continue</a>
+        </div>
+    </div>
+
+    <!-- Failure Popup -->
+    <div class="popup" id="failure-popup">
+        <div class="popup-content">
+            <h3>Login Failed</h3>
+            <p>Incorrect ID or password. Please try again.</p>
+            <button class="btn" onclick="closePopup()">Close</button>
+        </div>
+    </div>
+    
+    <script type="text/javascript" src="Asset/js/login.js"></script>
+    <script>
+        // Show the success or failure popup based on the query parameter 'status'
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const status = urlParams.get('status');
+
+            if (status === 'success') {
+                document.getElementById('success-popup').style.display = 'flex';
+            } else if (status === 'failure') {
+                document.getElementById('failure-popup').style.display = 'flex';
+            }
+        };
+
+        // Function to close the failure popup
+        function closePopup() {
+            document.getElementById('failure-popup').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
