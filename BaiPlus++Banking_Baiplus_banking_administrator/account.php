@@ -12,14 +12,6 @@ $param4 = $_SESSION['param4']; // fname
 $param5 = $_SESSION['param5']; // lname
 $param6 = $_SESSION['param6']; // em_id
 
-
-
-
-
-
-
-
-// Retrieve the list of users with the latest transaction datetime for each account_transferor
 $query = "SELECT account_transferor, MAX(transaction_date) AS last_transaction_date
           FROM transaction
           GROUP BY account_transferor";
@@ -31,13 +23,10 @@ if ($result) {
         $account_transferor = $row['account_transferor'];
         $last_transaction_date = $row['last_transaction_date'];
 
-        // Check if the last transaction date is more than 3 years ago
         $threeYearsAgo = date('Y-m-d H:i:s', strtotime('-3 years'));
         if ($last_transaction_date < $threeYearsAgo) {
-            // Update the account status to 'Inactive' in the account table
             $updateQuery = "UPDATE account SET account_status = 'Inactive' WHERE account_id = ?";
         } else {
-            // Update the account status to 'Active' in the account table
             $updateQuery = "UPDATE account SET account_status = 'Active' WHERE account_id = ? AND account_status != 'Suspend' AND account_status != 'Freeze Temp' AND account_status != 'Freeze Permanent' AND account_status != 'Closed'";
         }
 
@@ -47,7 +36,6 @@ if ($result) {
     }
 }
 
-// Update the account status to 'Inactive' for accounts with no transactions and date of opening more than 3 years ago
 $updateQuery = "UPDATE account
                 SET account_status = 'Inactive'
                 WHERE account_id NOT IN (
@@ -58,31 +46,6 @@ $updateQuery = "UPDATE account
 
 $stmt = $conn->prepare($updateQuery);
 $stmt->execute();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 $currentDateTime = new DateTime();
 $sql = "SELECT mh.*, a.account_status
@@ -127,22 +90,13 @@ if ($stmt->rowCount() > 0) {
     }
 }
 
-
-
-
-
-
-
-
 if (isset($_GET['delete'])) {
     $delete_id = $_GET['delete'];
-
 
     $checkstmt = $conn->query("SELECT COUNT(*) as count FROM bill WHERE account_id = $delete_id");
     $count = $checkstmt->fetch(PDO::FETCH_ASSOC)['count'];
 
     if ($count > 0) {
-        // If there are related records, show a modal alert to the user
         echo '<script>alert("Cannot delete this account record because there are related records in the Bill table.");</script>';
     } else if (!$count > 0) {
         $checkstmt = $conn->query("SELECT COUNT(*) as count FROM loan WHERE account_id = $delete_id");
@@ -187,7 +141,6 @@ if (isset($_GET['delete'])) {
             header("refresh:1; url=account.php");
         }
     } else {
-        // If there are no related records, delete the account record
         $deletestmt = $conn->query("DELETE FROM account WHERE account_id = $delete_id");
         $deletestmt->execute();
         echo "<script>alert('Data has been deleted successfully');</script>";
@@ -195,8 +148,6 @@ if (isset($_GET['delete'])) {
         header("refresh:1; url=account.php");
     }
 }
-
-
 
 ?>
 
@@ -213,15 +164,10 @@ if (isset($_GET['delete'])) {
 
     <title>Account Management</title>
 
-    <!-- Custom fonts for this template -->
     <link rel="icon" href="img/favicon.ico" type="img/ico">
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
-
-    <!-- Custom styles for this page -->
     <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
 </head>
@@ -241,7 +187,6 @@ if (isset($_GET['delete'])) {
         border-radius: 50%;
     }
 
-    /* CSS Animation */
     @keyframes scale-in {
         0% {
             transform: scale(0);
@@ -252,56 +197,32 @@ if (isset($_GET['delete'])) {
         }
     }
 
-    /* Apply scale-in animation */
     .page-transition-slide-in {
         animation: scale-in 0.5s ease-in-out;
     }
 </style>
 
-
-<!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round"> -->
-<!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"> -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> -->
-<!-- <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script> -->
 
 <body id="page-top">
-
-    <!-- Page Wrapper -->
     <div id="wrapper">
-
-        <!-- Sidebar -->
         <ul class="navbar-nav bg-gradient-light sidebar sidebar-light accordion" id="accordionSidebar">
-
-            <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.php">
                 <div class="sidebar-brand-icon rotate-n-0">
                     <img src="img\baiplus_logo.png.png" alt="baiplus_logo" width="71">
                 </div>
                 <div class="sidebar-brand-text mx-3">BaiPlus <sup>+</sup></div>
             </a>
-
-            <!-- Divider -->
             <hr class="sidebar-divider my-0">
-
-            <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
                 <a class="nav-link" href="index.php">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
-
-            <!-- Divider -->
             <hr class="sidebar-divider">
-
-            <!-- Heading -->
             <div class="sidebar-heading">
                 Management
             </div>
-
-            <!-- Nav Item - Pages Collapse Menu -->
             <?php
             if ($param3 == 'Manager') {
             ?>
@@ -352,7 +273,6 @@ if (isset($_GET['delete'])) {
             }
             ?>
 
-            <!-- Nav Item - Utilities Collapse Menu -->
             <?php
             if ($param3 == 'Administrator') {
             ?>
@@ -424,17 +344,12 @@ if (isset($_GET['delete'])) {
             }
             ?>
 
-            <!-- Divider -->
             <hr class="sidebar-divider">
 
-            <!-- Heading -->
             <div class="sidebar-heading">
                 Addons
             </div>
 
-
-
-            <!-- Nav Item - Tables -->
             <li class="nav-item">
                 <a class="nav-link" href="table.php">
                     <i class="fas fa-fw fa-table"></i>
@@ -448,39 +363,20 @@ if (isset($_GET['delete'])) {
                     <span>Advanced Analysis Report</span></a>
             </li>
 
-            <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
 
-            <!-- Sidebar Toggler (Sidebar) -->
             <div class="text-center d-none d-md-inline">
                 <button class="rounded-circle border-0" id="sidebarToggle"></button>
             </div>
 
-            <!-- Sidebar Message -->
-            <!-- <div class="sidebar-card d-none d-lg-flex">
-                <img class="sidebar-card-illustration mb-2" src="img/undraw_rocket.svg" alt="...">
-                <p class="text-center mb-2"><strong>BaiPlus</strong> is has many features, components, and more!</p>
-                <a class="btn btn-success btn-sm" href="https://startbootstrap.com/theme/sb-admin-pro">Let's get started!</a>
-            </div> -->
-
         </ul>
-        <!-- End of Sidebar -->
 
-        <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
-
-            <!-- Main Content -->
             <div id="content">
-
-                <!-- Topbar -->
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-
-                    <!-- Sidebar Toggle (Topbar) -->
                     <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
                         <i class="fa fa-bars"></i>
                     </button>
-
-                    <!-- Topbar Search -->
                     <div class="top-tools-bar">
                         <h1 class="animated-text" style="margin-top: 10px;">BaiPlus : Online Banking System Management</h1>
                     </div>
@@ -492,12 +388,9 @@ if (isset($_GET['delete'])) {
                             overflow: hidden;
                             white-space: nowrap;
                             color: #333;
-                            /* Change the color as per your preference */
                             border-right: 0.15em solid #333;
-                            /* Change the border color and width as per your preference */
                             animation: typing 0.5s steps(40, end), blink-caret 1.5s step-end infinite;
                             transition: border-color 0.5s ease-out;
-                            /* Add transition effect to border-color property */
                         }
 
                         @keyframes typing {
@@ -519,43 +412,19 @@ if (isset($_GET['delete'])) {
 
                             50% {
                                 border-color: #333;
-                                /* Change the color as per your preference */
                             }
                         }
 
                         .animated-text:hover {
                             border-color: #999;
-                            /* Change the border color on hover as per your preference */
                         }
-
-
-                        /* .reveal {
-        position: relative;
-        transform: translateY(125px);
-        opacity: 0.2;
-        transition: 0.75s all ease;
-    }
-
-    .reveal.active {
-        transform: translateY(0);
-        opacity: 1;
-    }
-
-    .collapse {
-        transition: height 0.3s ease;
-        overflow: hidden;
-    } */
                     </style>
 
-                    <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
-
-                        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
                         <li class="nav-item dropdown no-arrow d-sm-none">
                             <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-search fa-fw"></i>
                             </a>
-                            <!-- Dropdown - Messages -->
                             <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
                                 <form class="form-inline mr-auto w-100 navbar-search">
                                     <div class="input-group">
@@ -570,24 +439,18 @@ if (isset($_GET['delete'])) {
                             </div>
                         </li>
 
-                        <!-- Nav Item - Alerts -->
                         <?php
                         if ($param3 == 'Administrator') {
                         ?>
                             <li class="nav-item dropdown no-arrow mx-1">
                                 <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <i class="fas fa-bell fa-fw"></i>
-                                    <!-- Counter - Alerts -->
                                     <?php
                                     $query = "SELECT mh.account_id, mh.employee_id, e.employee_fname, e.employee_lname, mh.action_type, mh.datetime
                   FROM managehistory mh
                   INNER JOIN employee e ON mh.employee_id = e.employee_id
                   WHERE (mh.action_type LIKE '%Active->Suspend(Waiting for Approve),%' OR
-                    --    mh.action_type LIKE '%Active->Freeze Permanent,%' OR
-                    --    mh.action_type LIKE '%Active->Freeze Temp,%' OR
                        mh.action_type LIKE '%Inactive->Suspend(Waiting for Approve),%')";
-                                    // --    mh.action_type LIKE '%Inactive->Freeze Permanent,%' OR
-                                    // --    mh.action_type LIKE '%Inactive->Freeze Temp,%')";
 
                                     $result = $conn->query($query);
                                     $rows = $result->fetchAll(PDO::FETCH_ASSOC);
@@ -602,7 +465,6 @@ if (isset($_GET['delete'])) {
                                         <?php } ?>
                                     </span>
                                 </a>
-                                <!-- Dropdown - Alerts -->
                                 <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
                                     <h6 class="dropdown-header">
                                         Alerts Center
@@ -610,7 +472,6 @@ if (isset($_GET['delete'])) {
                                     <div class="dropdown-scrollable">
                                         <?php foreach ($rows as $row) { ?>
                                             <?php
-                                            // Format the datetime value
                                             $formatted_date = date('F d, Y H:i:s', strtotime($row['datetime']));
                                             ?>
                                             <a class="dropdown-item d-flex align-items-center" href="requesting.php">
@@ -634,7 +495,6 @@ if (isset($_GET['delete'])) {
                             <style>
                                 .dropdown-scrollable {
                                     max-height: 300px;
-                                    /* Adjust the height as needed */
                                     overflow-y: scroll;
                                 }
                             </style>
@@ -642,12 +502,7 @@ if (isset($_GET['delete'])) {
                         }
                         ?>
 
-                        <!-- Nav Item - Messages -->
-                        <!-- IF WANT TO USE MESSAGE -->
-
                         <div class="topbar-divider d-none d-sm-block"></div>
-
-                        <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?php echo $param4 . ' ' . $param5 . '<br>' . $param3; ?></span>
@@ -674,7 +529,6 @@ if (isset($_GET['delete'])) {
                                 }
                                 ?>
                             </a>
-                            <!-- Dropdown - User Information -->
                             <div class="modal fade bd-example-modal-lg" id="profileModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
                                     <div class="modal-content">
@@ -703,11 +557,6 @@ if (isset($_GET['delete'])) {
                                     </div>
                                 </div>
                             </div>
-
-
-
-
-                            <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
                                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#profileModal">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
@@ -732,9 +581,7 @@ if (isset($_GET['delete'])) {
                     </ul>
 
                 </nav>
-                <!-- End of Topbar -->
 
-                <!-- Modal -->
                 <div class="modal fade bd-example-modal-lg" id="customeraddmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
                         <div class="modal-content">
@@ -751,11 +598,6 @@ if (isset($_GET['delete'])) {
 
 
                                     <div class="modal-body">
-                                        <!-- <div class="form-group">
-                                            <label> Account ID </label>
-                                            <input type="text" name="account_id" class="form-control" placeholder="Enter Account ID">
-                                        </div> -->
-
                                         <div class="form-row">
                                             <div class="form-group col">
                                                 <label> Account Name </label>
@@ -800,22 +642,6 @@ if (isset($_GET['delete'])) {
                                                     <option value="Business">Business Account</option>
                                                 </select>
                                             </div>
-
-                                            <!-- <div class="form-group col">
-                                                <label> Postcode </label>
-                                                <?php
-                                                // $stmt = $conn->query("SELECT customer_postcode FROM postcode");
-                                                // $stmt->execute();
-                                                // $result_postcode = $stmt->fetchAll();
-                                                // $count = count($result_postcode);
-                                                // echo '<select name="customer_postcode" class="form-control">';
-                                                // echo '<option value=""></option>';
-                                                // for ($i = 0; $i < $count; $i++) {
-                                                //     echo '<option value="' . $result_postcode[$i]['customer_postcode'] . '">' . $result_postcode[$i]['customer_postcode'] . '</option>';
-                                                // }
-                                                // echo '</select>';
-                                                ?>
-                                            </div> -->
                                             <div class="form-group col">
                                                 <label> Account Status </label>
                                                 <select name="account_status" class="form-control">
@@ -841,7 +667,6 @@ if (isset($_GET['delete'])) {
                                                 ?>
                                             </select>
                                         </div>
-
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
@@ -854,8 +679,6 @@ if (isset($_GET['delete'])) {
                     </div>
                 </div>
 
-
-                <!-- EDIT Modal -->
                 <div class="modal fade bd-example-modal-lg" id="customereditmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
                         <div class="modal-content">
@@ -865,14 +688,8 @@ if (isset($_GET['delete'])) {
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-
-
-
-
                             <div class="modal-body">
                                 <form action="edit.php" method="POST" enctype="multipart/form-data">
-                                    <!-- <div class="modal-body">    ลดช่องบรรทัด enter -->
-
                                     <div class="form-group">
                                         <label> Customer ID </label>
                                         <input type="text" name="customer_ID" id="customer_ID" class="form-control" placeholder="Enter Customer ID">
@@ -888,13 +705,10 @@ if (isset($_GET['delete'])) {
                                             <input type="text" name="customer_lname" class="form-control" placeholder="Enter Last Name">
                                         </div>
                                     </div>
-
-
                                     <div class="form-group">
                                         <label> Email </label>
                                         <input type="text" name="customer_email" class="form-control" placeholder="Enter Email">
                                     </div>
-
                                     <div class="form-row">
                                         <div class="form-group col">
                                             <label> Date of Birth </label>
@@ -915,7 +729,6 @@ if (isset($_GET['delete'])) {
                                             <input type="text" name="customer_postcode" class="form-control" placeholder="Enter Postcode">
                                         </div>
                                     </div>
-
                                     <div class="form-group">
                                         <label> Card Code </label>
                                         <input type="text" name="card_code" class="form-control" placeholder="Enter Card Code">
@@ -926,7 +739,6 @@ if (isset($_GET['delete'])) {
                                             <input type="text" name="customer_phone" class="form-control" placeholder="Enter Phone">
                                         </div>
                                     </div>
-
                                     <div class="form-row">
                                         <div class="form-group col">
                                             <label> Password </label>
@@ -937,7 +749,6 @@ if (isset($_GET['delete'])) {
                                             <input type="password" name="account_pin" class="form-control" placeholder="Enter Account Pin" minlength="6" maxlength="6" pattern="\d+" title="Please enter 6 number">
                                         </div>
                                     </div>
-
                                     <div class="form-row">
                                         <div class="form-group col">
                                             <label> Salary </label>
@@ -957,39 +768,17 @@ if (isset($_GET['delete'])) {
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
                                 <button type="submit" name="update" class="btn btn-outline-primary">Save Data</button>
-                                <!-- </div> -->
                                 </form>
                             </div>
-
                         </div>
                     </div>
                 </div>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                 <div class="page-transition-slide-in">
-                    <!-- Begin Page Content -->
                     <div class="container-fluid">
-                        <!-- Page Heading -->
                         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                            <!-- <div class="ml-auto"> -->
-                                <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#customeraddmodal">Add Account</i></button>
-                            <!-- </div> -->
-                            <!-- addbutton -->
-                            <!-- GENERATE REPORT -->
+                            <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#customeraddmodal">Add Account</i></button>
                         </div>
                         <hr>
                         <?php if (isset($_SESSION['success'])) {
@@ -997,9 +786,6 @@ if (isset($_GET['delete'])) {
                             <div class="alert alert-success">
                                 <?php
                                 echo $_SESSION['success'];
-                                // echo '<script>';
-                                // echo 'setTimeout(function(){ window.location.href = "account.php"; }, 1000);'; // Refresh after 1 second (1000 milliseconds)
-                                // echo '</script>';
                                 unset($_SESSION['success']);
                                 ?>
                             </div>
@@ -1014,21 +800,14 @@ if (isset($_GET['delete'])) {
                             </div>
                         <?php } ?>
 
-
-
                         <div class="row">
                             <div class="col-xl-12 col-lg-7">
                                 <div class="card shadow mb-4">
                                     <div class="card-header py-3">
-                                        <!-- <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css"> -->
                                         <h6 class="m-0 font-weight-bold text-primary">Account Table</h6>
                                     </div>
                                     <div class="card-body">
-
-
                                         <form action="edit.php" method="POST" enctype="multipart/form-data">
-
-
                                             <div class="table-responsive">
                                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                                     <thead>
@@ -1043,7 +822,6 @@ if (isset($_GET['delete'])) {
                                                             <th scope="col">Status</th>
                                                             <th scope="col" width="100px">Bank ID</th>
                                                             <th scope="col"></th>
-
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -1096,12 +874,7 @@ if (isset($_GET['delete'])) {
                                                             }
                                                         }
                                                         ?>
-
-
-
                                                     </tbody>
-                                                    <!-- <input type="checkbox" id="imageCheckbox" onchange="toggleImage()"> Show Bank Logo <br><br> -->
-
                                                 </table>
                                             </div>
                                         </form>
@@ -1109,17 +882,9 @@ if (isset($_GET['delete'])) {
                                 </div>
                             </div>
                         </div>
-                        <!-- /.container-fluid -->
-
-
-
-
-
                     </div>
                 </div>
-                <!-- End of Main Content -->
 
-                <!-- Footer -->
                 <footer class="sticky-footer bg-white">
                     <div class="container my-auto">
                         <div class="copyright text-center my-auto">
@@ -1130,20 +895,13 @@ if (isset($_GET['delete'])) {
                         </div>
                     </div>
                 </footer>
-                <!-- End of Footer -->
-
             </div>
-            <!-- End of Content Wrapper -->
-
         </div>
-        <!-- End of Page Wrapper -->
 
-        <!-- Scroll to Top Button-->
         <a class="scroll-to-top rounded" href="#page-top">
             <i class="fas fa-angle-up"></i>
         </a>
 
-        <!-- Logout Modal-->
         <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -1160,24 +918,18 @@ if (isset($_GET['delete'])) {
                     </div>
                 </div>
             </div>
-
         </div>
 
-        <!-- Bootstrap core JavaScript-->
         <script src="vendor/jquery/jquery.min.js"></script>
         <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-        <!-- Core plugin JavaScript-->
         <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
-        <!-- Custom scripts for all pages-->
         <script src="js/sb-admin-2.min.js"></script>
 
-        <!-- Page level plugins -->
         <script src="vendor/datatables/jquery.dataTables.min.js"></script>
         <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
-        <!-- Page level custom scripts -->
         <script src="js/demo/datatables-demo.js"></script>
         <script>
             const table = document.getElementById("dataTable");
@@ -1188,9 +940,6 @@ if (isset($_GET['delete'])) {
                 rows[i].insertBefore(cell, rows[i].firstChild);
             }
         </script>
-
-
-
 
         <script>
             $(document).ready(function() {
@@ -1236,7 +985,6 @@ if (isset($_GET['delete'])) {
             }
         </script>
 
-
         <script>
             function truncateDecimals(element, decimalPlaces) {
                 if (element.value.indexOf('.') !== -1) {
@@ -1270,15 +1018,6 @@ if (isset($_GET['delete'])) {
                 }
             }
         </script>
-
-
-        <!-- <script>
-
-
-
-
-        </script> -->
-
 </body>
 
 </html>
