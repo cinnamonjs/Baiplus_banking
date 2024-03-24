@@ -4,7 +4,6 @@ $_SESSION['previous_page'] = basename($_SERVER['PHP_SELF']);
 $previousPage = $_SESSION['previous_page'] ?? 'unknown';
 require_once "db.php";
 
-
 $param1 = $_SESSION['param1']; // username
 $param2 = $_SESSION['param2']; // password
 $param3 = $_SESSION['param3']; // role
@@ -23,23 +22,16 @@ if (isset($_POST['update'])) {
     $account_status = $_POST['account_status'];
     $bank_id = $_POST['bank_id'];
 
-
-
     $stmt = $conn->prepare("SELECT * FROM account WHERE account_id = :id");
     $stmt->bindParam(":id", $id);
     $stmt->execute();
     $row = $stmt->fetch(PDO::FETCH_ASSOC);
-
 
     $change = 0;
     if ($_POST['account_name'] != $row['account_name']) {
         $changes_account_name = $row['account_name'] . '->' . $_POST['account_name'] . ',';
         $change = 1;
     }
-    // if ($_POST['account_DOP'] != $row['account_DOP']) {
-    //     $changes_account_DOP = $row['account_DOP'] . '->' . $_POST['account_DOP'] . ',';
-    //     $change = 1;
-    // }
     if ($_POST['account_balance'] != $row['account_balance']) {
         $changes_account_balance = $row['account_balance'] . '->' . $_POST['account_balance'] . ',';
         $change = 1;
@@ -64,7 +56,6 @@ if (isset($_POST['update'])) {
         $changes_bank_id = $row['bank_id'] . '->' . $_POST['bank_id'] . ',';
         $change = 1;
     }
-
 
     if ($change == 1) {
         $sum_change = $changes_account_name . $changes_account_balance . $changes_customer_id . $changes_account_type . $changes_account_status . $changes_bank_id;
@@ -103,35 +94,6 @@ if (isset($_POST['update'])) {
         $_SESSION['error'] = "Data has not been updated successfully";
         header("location: account.php");
     }
-
-    // if ($_POST['account_status'] != $row['account_status']) {
-    // if ($_POST['account_status'] == 'Inactive') {
-    // $sql = $conn->prepare("INSERT INTO `managehistory` (`datetime`, employee_id, account_id, action_type)  VALUE (NOW(), :employee_id, :id, :account_status)");
-    // $sql->bindParam(":employee_id", $param6);
-    // $sql->bindParam(":id", $id);
-    // $sql->bindParam(":account_status", $account_status);
-    // $sql->execute();
-    // }
-    // }
-
-
-
-
-
-
-    // $sql = $conn->prepare("UPDATE account SET account_fname = :account_fname, account_lname = :account_lname WHERE account_ID = :id");
-    // $sql->bindParam(":id", $id);
-    // $sql->bindParam(":account_fname", $account_fname);
-    // $sql->bindParam(":account_lname", $account_lname);
-    // $sql->execute();
-
-    // if ($sql) {
-    //     $_SESSION['success'] = "Data has been updated successfully";
-    //     header("location: index.php");
-    // } else {
-    //     $_SESSION['error'] = "Data has not been updated successfully";
-    //     header("location: index.php");
-    // }
 }
 
 ?>
@@ -149,15 +111,10 @@ if (isset($_POST['update'])) {
 
     <title>Account Detail</title>
 
-    <!-- Custom fonts for this template -->
-<link rel="icon" href="img/favicon.ico" type="img/ico">
+    <link rel="icon" href="img/favicon.ico" type="img/ico">
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
-
-    <!-- Custom styles for this page -->
     <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
 </head>
@@ -174,50 +131,29 @@ if (isset($_POST['update'])) {
     }
 </style>
 
-
-<!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round"> -->
-<!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"> -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"> -->
-<!-- <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script> -->
 
 <body id="page-top">
-
-    <!-- Page Wrapper -->
     <div id="wrapper">
-
-        <!-- Sidebar -->
         <ul class="navbar-nav bg-gradient-light sidebar sidebar-light accordion" id="accordionSidebar">
-
-            <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.php">
                 <div class="sidebar-brand-icon rotate-n-0">
                     <img src="img\baiplus_logo.png.png" alt="baiplus_logo" width="71">
                 </div>
                 <div class="sidebar-brand-text mx-3">BaiPlus <sup>+</sup></div>
             </a>
-
-            <!-- Divider -->
             <hr class="sidebar-divider my-0">
-
-            <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
                 <a class="nav-link" href="index.php">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
-
-            <!-- Divider -->
             <hr class="sidebar-divider">
 
-            <!-- Heading -->
             <div class="sidebar-heading">
                 Management
             </div>
 
-            <!-- Nav Item - Pages Collapse Menu -->
             <?php
             if ($param3 == 'Manager') {
             ?>
@@ -268,7 +204,6 @@ if (isset($_POST['update'])) {
             }
             ?>
 
-            <!-- Nav Item - Utilities Collapse Menu -->
             <?php
             if ($param3 == 'Administrator') {
             ?>
@@ -340,138 +275,87 @@ if (isset($_POST['update'])) {
             }
             ?>
 
-            <!-- Divider -->
             <hr class="sidebar-divider">
 
-            <!-- Heading -->
             <div class="sidebar-heading">
                 Addons
             </div>
 
-
-
-            <!-- Nav Item - Tables -->
             <li class="nav-item">
-                        <a class="nav-link" href="table.php">
-                            <i class="fas fa-fw fa-table"></i>
-                            <span>Tables</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="advance.php">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark-heart-fill" viewBox="0 0 16 16">
-                                <path d="M2 15.5a.5.5 0 0 0 .74.439L8 13.069l5.26 2.87A.5.5 0 0 0 14 15.5V2a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v13.5zM8 4.41c1.387-1.425 4.854 1.07 0 4.277C3.146 5.48 6.613 2.986 8 4.412z" />
-                            </svg>
-                            <span>Advanced Analysis Report</span></a>
-                    </li>
+                <a class="nav-link" href="table.php">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>Tables</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="advance.php">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark-heart-fill" viewBox="0 0 16 16">
+                        <path d="M2 15.5a.5.5 0 0 0 .74.439L8 13.069l5.26 2.87A.5.5 0 0 0 14 15.5V2a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v13.5zM8 4.41c1.387-1.425 4.854 1.07 0 4.277C3.146 5.48 6.613 2.986 8 4.412z" />
+                    </svg>
+                    <span>Advanced Analysis Report</span></a>
+            </li>
 
-            <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
 
-            <!-- Sidebar Toggler (Sidebar) -->
             <div class="text-center d-none d-md-inline">
                 <button class="rounded-circle border-0" id="sidebarToggle"></button>
             </div>
 
-            <!-- Sidebar Message -->
-            <!-- <div class="sidebar-card d-none d-lg-flex">
-                <img class="sidebar-card-illustration mb-2" src="img/undraw_rocket.svg" alt="...">
-                <p class="text-center mb-2"><strong>BaiPlus</strong> is has many features, components, and more!</p>
-                <a class="btn btn-success btn-sm" href="https://startbootstrap.com/theme/sb-admin-pro">Let's get started!</a>
-            </div> -->
-
         </ul>
-        <!-- End of Sidebar -->
 
-        <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
-
-            <!-- Main Content -->
             <div id="content">
-
-                <!-- Topbar -->
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-
-                    <!-- Sidebar Toggle (Topbar) -->
                     <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
                         <i class="fa fa-bars"></i>
                     </button>
-
-                    <!-- Topbar Search -->
                     <div class="top-tools-bar">
-                                <h1 class="animated-text" style="margin-top: 10px;">BaiPlus : Online Banking System Management</h1>
-                            </div>
+                        <h1 class="animated-text" style="margin-top: 10px;">BaiPlus : Online Banking System Management</h1>
+                    </div>
 
-<style>
-    .animated-text {
-        font-size: 1rem;
-        text-align: center;
-        overflow: hidden;
-        white-space: nowrap;
-        color: #333;
-        /* Change the color as per your preference */
-        border-right: 0.15em solid #333;
-        /* Change the border color and width as per your preference */
-        animation: typing 0.5s steps(40, end), blink-caret 1.5s step-end infinite;
-        transition: border-color 0.5s ease-out;
-        /* Add transition effect to border-color property */
-    }
+                    <style>
+                        .animated-text {
+                            font-size: 1rem;
+                            text-align: center;
+                            overflow: hidden;
+                            white-space: nowrap;
+                            color: #333;
+                            border-right: 0.15em solid #333;
+                            animation: typing 0.5s steps(40, end), blink-caret 1.5s step-end infinite;
+                            transition: border-color 0.5s ease-out;
+                        }
 
-    @keyframes typing {
-        from {
-            width: 0;
-        }
+                        @keyframes typing {
+                            from {
+                                width: 0;
+                            }
 
-        to {
-            width: 100%;
-        }
-    }
+                            to {
+                                width: 100%;
+                            }
+                        }
 
-    @keyframes blink-caret {
+                        @keyframes blink-caret {
 
-        from,
-        to {
-            border-color: transparent;
-        }
+                            from,
+                            to {
+                                border-color: transparent;
+                            }
 
-        50% {
-            border-color: #333;
-            /* Change the color as per your preference */
-        }
-    }
+                            50% {
+                                border-color: #333;
+                            }
+                        }
 
-    .animated-text:hover {
-        border-color: #999;
-        /* Change the border color on hover as per your preference */
-    }
+                        .animated-text:hover {
+                            border-color: #999;
+                        }
+                    </style>
 
-
-    /* .reveal {
-        position: relative;
-        transform: translateY(125px);
-        opacity: 0.2;
-        transition: 0.75s all ease;
-    }
-
-    .reveal.active {
-        transform: translateY(0);
-        opacity: 1;
-    }
-
-    .collapse {
-        transition: height 0.3s ease;
-        overflow: hidden;
-    } */
-</style>
-
-                    <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
-
-                        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
                         <li class="nav-item dropdown no-arrow d-sm-none">
                             <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-search fa-fw"></i>
                             </a>
-                            <!-- Dropdown - Messages -->
                             <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
                                 <form class="form-inline mr-auto w-100 navbar-search">
                                     <div class="input-group">
@@ -485,25 +369,19 @@ if (isset($_POST['update'])) {
                                 </form>
                             </div>
                         </li>
-
-                        <!-- Nav Item - Alerts -->
                         <?php
                         if ($param3 == 'Administrator') {
                         ?>
                             <li class="nav-item dropdown no-arrow mx-1">
                                 <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <i class="fas fa-bell fa-fw"></i>
-                                    <!-- Counter - Alerts -->
+
                                     <?php
                                     $query = "SELECT mh.account_id, mh.employee_id, e.employee_fname, e.employee_lname, mh.action_type, mh.datetime
                   FROM managehistory mh
                   INNER JOIN employee e ON mh.employee_id = e.employee_id
                   WHERE (mh.action_type LIKE '%Active->Suspend(Waiting for Approve),%' OR
-                    --    mh.action_type LIKE '%Active->Freeze Permanent,%' OR
-                    --    mh.action_type LIKE '%Active->Freeze Temp,%' OR
                        mh.action_type LIKE '%Inactive->Suspend(Waiting for Approve),%')";
-                    // --    mh.action_type LIKE '%Inactive->Freeze Permanent,%' OR
-                    // --    mh.action_type LIKE '%Inactive->Freeze Temp,%')";
 
                                     $result = $conn->query($query);
                                     $rows = $result->fetchAll(PDO::FETCH_ASSOC);
@@ -518,7 +396,7 @@ if (isset($_POST['update'])) {
                                         <?php } ?>
                                     </span>
                                 </a>
-                                <!-- Dropdown - Alerts -->
+
                                 <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
                                     <h6 class="dropdown-header">
                                         Alerts Center
@@ -526,7 +404,6 @@ if (isset($_POST['update'])) {
                                     <div class="dropdown-scrollable">
                                         <?php foreach ($rows as $row) { ?>
                                             <?php
-                                            // Format the datetime value
                                             $formatted_date = date('F d, Y H:i:s', strtotime($row['datetime']));
                                             ?>
                                             <a class="dropdown-item d-flex align-items-center" href="requesting.php">
@@ -550,7 +427,6 @@ if (isset($_POST['update'])) {
                             <style>
                                 .dropdown-scrollable {
                                     max-height: 300px;
-                                    /* Adjust the height as needed */
                                     overflow-y: scroll;
                                 }
                             </style>
@@ -558,12 +434,8 @@ if (isset($_POST['update'])) {
                         }
                         ?>
 
-                        <!-- Nav Item - Messages -->
-                        <!-- IF WANT TO USE MESSAGE -->
-
                         <div class="topbar-divider d-none d-sm-block"></div>
 
-                        <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?php echo $param4 . ' ' . $param5 . '<br>' . $param3; ?></span>
@@ -590,40 +462,34 @@ if (isset($_POST['update'])) {
                                 }
                                 ?>
                             </a>
-                            <!-- Dropdown - User Information -->
+
                             <div class="modal fade bd-example-modal-lg" id="profileModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel"></h5>
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
+                                <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel"></h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="modal-body text-center">
+                                                <div class="form-group">
+                                                    <img class="img-profile rounded-circle" src="img/<?php echo $param3; ?>.gif" width="150">
                                                 </div>
-                                                <div class="modal-body">
-                                                    <div class="modal-body text-center">
-                                                        <div class="form-group">
-                                                            <img class="img-profile rounded-circle" src="img/<?php echo $param3; ?>.gif" width="150">
-                                                        </div>
-                                                        <h2> <?php echo $param3; ?> </h2>
-                                                        <label> Username : <?php echo $param1; ?> </label>
-                                                        <h4> <?php echo $param4; ?> <?php echo $param5; ?> </h4>
-                                                    </div>
-
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-outline-dark" data-dismiss="modal">Close</button>
-                                                    </div>
-                                                    </form>
-                                                </div>
-
+                                                <h2> <?php echo $param3; ?> </h2>
+                                                <label> Username : <?php echo $param1; ?> </label>
+                                                <h4> <?php echo $param4; ?> <?php echo $param5; ?> </h4>
                                             </div>
+
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-outline-dark" data-dismiss="modal">Close</button>
+                                            </div>
+                                            </form>
                                         </div>
                                     </div>
-
-
-
-
-                            <!-- Dropdown - User Information -->
+                                </div>
+                            </div>
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
                                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#profileModal">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
@@ -644,22 +510,12 @@ if (isset($_POST['update'])) {
                                 </a>
                             </div>
                         </li>
-
                     </ul>
-
                 </nav>
-                <!-- End of Topbar -->
-
-
-
-
-
 
                 <div class="modal-body">
 
                     <form action="account_detail.php" method="POST" enctype="multipart/form-data">
-                        <!-- <div class="modal-body">    ลดช่องบรรทัด enter -->
-
                         <?php
                         if (isset($_GET['id'])) {
                             $id = $_GET['id'];
@@ -684,7 +540,6 @@ if (isset($_POST['update'])) {
                             </div>
                         </div>
 
-
                         <div class="form-group">
                             <label> Account Balance </label>
                             <input type="number" step="0.01" oninput="truncateDecimals(this, 2);" name="account_balance" class="form-control" value="<?php echo $data['account_balance']; ?>" disabled>
@@ -693,20 +548,13 @@ if (isset($_POST['update'])) {
                         <div class="form-row">
                             <div class="form-group col">
                                 <label> Customer ID </label>
-                                <!-- <select name="customer_id" class="form-control"> -->
                                 <?php
                                 $stmt = $conn->query("SELECT customer_id FROM customer");
                                 $stmt->execute();
                                 $result_customer_id = $stmt->fetchAll();
                                 $count = count($result_customer_id);
-                                // for ($i = 0; $i < $count; $i++) {
-                                //     $selected = ($result_customer_id[$i]['customer_id'] == $data['customer_id']) ? 'selected' : '';
-                                //     echo '<option value="' . $result_customer_id[$i]['customer_id'] . '" ' . $selected . '>' . $result_customer_id[$i]['customer_id'] . '</option>';
-                                // }
                                 ?>
                                 <input type="text" value="<?php echo $data['customer_id']; ?>" class="form-control" name="customer_id" required disabled>
-                                <!-- </select> -->
-
                             </div>
                             <div class="form-group col">
                                 <label>Account Type</label>
@@ -781,21 +629,16 @@ if (isset($_POST['update'])) {
                             </div>
                             <div class="form-group col">
                                 <label> Bank ID </label>
-                                <!-- <select name="bank_id" class="form-control"> -->
                                 <?php
                                 $conn = mysqli_connect("localhost", "root", "", "baiplus_final");
                                 $result = mysqli_query($conn, "SELECT bank_id, bank_name FROM bank");
                                 while ($row = mysqli_fetch_assoc($result)) {
                                     $bank_id = $row['bank_id'];
                                     $bank_name = $row['bank_name'];
-                                    // $selected = ($bank_id == $data['bank_id']) ? "selected" : "";
-                                    // echo "<option value='$bank_id' $selected>$bank_id - $bank_name</option>";
                                 }
                                 mysqli_close($conn);
                                 ?>
-                                <!-- </select> -->
                                 <input type="text" value="<?php echo $data['bank_id'];  ?>" class="form-control" name="bank_id" required disabled>
-
                             </div>
                         </div>
                 </div>
@@ -803,58 +646,22 @@ if (isset($_POST['update'])) {
                     <a href="requesting.php" type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</a>
                     </form>
                 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             </div>
-            <!-- End of Main Content -->
-
-            <!-- Footer -->
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
                         <span>
-                                    <img src="img/mybplogo.png" alt="My Logo" width="30" />
-                                    &nbsp;Copyright &copy; BaiPlus 2023
-                                </span>
+                            <img src="img/mybplogo.png" alt="My Logo" width="30" />
+                            &nbsp;Copyright &copy; BaiPlus 2023
+                        </span>
                     </div>
                 </div>
             </footer>
-            <!-- End of Footer -->
-
         </div>
-        <!-- End of Content Wrapper -->
-
     </div>
-    <!-- End of Page Wrapper -->
-
-    <!-- Scroll to Top Button-->
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>
     </a>
-
-    <!-- Logout Modal-->
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -899,10 +706,6 @@ if (isset($_POST['update'])) {
             rows[i].insertBefore(cell, rows[i].firstChild);
         }
     </script>
-
-
-
-
     <script>
         function previewImage(event) {
             var reader = new FileReader();
@@ -925,7 +728,6 @@ if (isset($_POST['update'])) {
             reader.readAsDataURL(event.target.files[0]);
         }
     </script>
-
     <script>
         let imgInput = document.getElementById('imgInput');
         let previewImg = document.getElementById('previewImg');
@@ -937,9 +739,6 @@ if (isset($_POST['update'])) {
             }
         }
     </script>
-
-
-
     <script>
         function truncateDecimals(element, decimalPlaces) {
             if (element.value.indexOf('.') !== -1) {
@@ -949,7 +748,6 @@ if (isset($_POST['update'])) {
             }
         }
     </script>
-
 </body>
 
 </html>
