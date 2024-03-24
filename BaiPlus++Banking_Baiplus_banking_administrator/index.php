@@ -480,7 +480,7 @@ LIMIT 5";
                 <ul class="navbar-nav bg-gradient-info sidebar sidebar-dark accordion" id="accordionSidebar">
 
                     <!-- Sidebar - Brand -->
-                    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="http://127.0.0.1/baiplus/index.php">
+                    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.php">
                         <div class="sidebar-brand-icon rotate-n-0">
                             <img src="img\baiplus_logo.png.png" alt="baiplus_logo" width="71">
                         </div>
@@ -492,7 +492,7 @@ LIMIT 5";
 
                     <!-- Nav Item - Dashboard -->
                     <li class="nav-item active">
-                        <a class="nav-link" href="http://127.0.0.1/baiplus/index.php">
+                        <a class="nav-link" href="index.php">
                             <i class="fas fa-fw fa-tachometer-alt"></i>
                             <span>Dashboard</span></a>
                     </li>
@@ -2047,7 +2047,7 @@ LIMIT 5";
                 <ul class="navbar-nav bg-gradient-info sidebar sidebar-dark accordion" id="accordionSidebar">
 
                     <!-- Sidebar - Brand -->
-                    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="http://127.0.0.1/baiplus/index.php">
+                    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.php">
                         <div class="sidebar-brand-icon rotate-n-0">
                             <img src="img\baiplus_logo.png.png" alt="baiplus_logo" width="71">
                         </div>
@@ -2059,7 +2059,7 @@ LIMIT 5";
 
                     <!-- Nav Item - Dashboard -->
                     <li class="nav-item active">
-                        <a class="nav-link" href="http://127.0.0.1/baiplus/index.php">
+                        <a class="nav-link" href="index.php">
                             <i class="fas fa-fw fa-tachometer-alt"></i>
                             <span>Dashboard</span></a>
                     </li>
