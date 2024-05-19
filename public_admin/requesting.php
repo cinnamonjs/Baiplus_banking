@@ -23,7 +23,7 @@ if (isset($_POST['approve'])) {
     $action_type = $_POST['action_type'];
 
     // Create a new MySQLi connection
-    $conn = mysqli_connect("127.0.0.1", "root", "", "baiplus_final");
+    $conn = mysqli_connect("mysql", "root", "", "baiplus_final");
 
     if (!$conn) {
         // Handle connection error
@@ -93,7 +93,7 @@ if (isset($_POST['reject'])) {
     $action_type_reject = $_POST['action_type_reject'];
 
     // Create a new MySQLi connection
-    $conn = mysqli_connect("127.0.0.1", "root", "", "baiplus_final");
+    $conn = mysqli_connect("mysql", "root", "", "baiplus_final");
 
     if (!$conn) {
         // Handle connection error

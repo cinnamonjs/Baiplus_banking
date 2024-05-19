@@ -823,7 +823,7 @@ if (isset($_POST['update'])) {
                                     <label> Postcode </label>
                                     <select name="customer_postcode" class="form-control">
                                         <?php
-                                        $conn = mysqli_connect("127.0.0.1", "root", "", "baiplus_final");
+                                        $conn = mysqli_connect("mysql", "root", "", "baiplus_final");
                                         $result = mysqli_query($conn, "SELECT customer_postcode, customer_city FROM postcode");
                                         echo "<option value=NULL></option>";
                                         while ($row = mysqli_fetch_assoc($result)) {

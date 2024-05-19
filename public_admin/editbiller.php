@@ -723,7 +723,7 @@ if (isset($_POST['update'])) {
                                     <label for="id"> Postcode </label>
                                     <select name="postcode" class="form-control">
                                         <?php
-                                        $conn = mysqli_connect("127.0.0.1", "root", "", "baiplus_final");
+                                        $conn = mysqli_connect("mysql", "root", "", "baiplus_final");
                                         $result = mysqli_query($conn, "SELECT customer_postcode, customer_city FROM postcode");
                                         while ($row = mysqli_fetch_assoc($result)) {
                                             $customer_postcode = $row['customer_postcode'];

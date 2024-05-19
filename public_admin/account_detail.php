@@ -630,7 +630,7 @@ if (isset($_POST['update'])) {
                             <div class="form-group col">
                                 <label> Bank ID </label>
                                 <?php
-                                $conn = mysqli_connect("127.0.0.1", "root", "", "baiplus_final");
+                                $conn = mysqli_connect("mysql", "root", "", "baiplus_final");
                                 $result = mysqli_query($conn, "SELECT bank_id, bank_name FROM bank");
                                 while ($row = mysqli_fetch_assoc($result)) {
                                     $bank_id = $row['bank_id'];

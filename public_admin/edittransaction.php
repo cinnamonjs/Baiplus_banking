@@ -703,7 +703,7 @@ if (isset($_POST['update'])) {
                                 <label>Account Transferor</label>
                                 <select name="account_transferor" class="form-control">
                                     <?php
-                                    $conn = mysqli_connect("127.0.0.1", "root", "", "baiplus_final");
+                                    $conn = mysqli_connect("mysql", "root", "", "baiplus_final");
                                     $query = "SELECT account_id, account_name FROM account";
                                     $result = mysqli_query($conn, $query);
                                     while ($row = mysqli_fetch_assoc($result)) {
@@ -721,7 +721,7 @@ if (isset($_POST['update'])) {
                                 <label>Account Receiver</label>
                                 <select name="account_receiver" class="form-control">
                                     <?php
-                                    $conn = mysqli_connect("127.0.0.1", "root", "", "baiplus_final");
+                                    $conn = mysqli_connect("mysql", "root", "", "baiplus_final");
                                     $query = "SELECT account_id, account_name FROM account";
                                     $result = mysqli_query($conn, $query);
                                     while ($row = mysqli_fetch_assoc($result)) {
@@ -738,7 +738,7 @@ if (isset($_POST['update'])) {
                                 <label>Error Code</label>
                                 <select name="err_code" class="form-control">
                                     <?php
-                                    $conn = mysqli_connect("127.0.0.1", "root", "", "baiplus_final");
+                                    $conn = mysqli_connect("mysql", "root", "", "baiplus_final");
                                     $result = mysqli_query($conn, "SELECT err_code, err_desc FROM error");
                                     while ($row = mysqli_fetch_assoc($result)) {
                                         $err_code = $row['err_code'];
@@ -758,7 +758,7 @@ if (isset($_POST['update'])) {
                                 <label>Bill ID</label>
                                 <select name="bill_id" class="form-control">
                                     <?php
-                                    $conn = mysqli_connect("127.0.0.1", "root", "", "baiplus_final");
+                                    $conn = mysqli_connect("mysql", "root", "", "baiplus_final");
                                     $query = "SELECT bill_id, bill_owner_fname FROM bill";
                                     $result = mysqli_query($conn, $query);
                                     while ($row = mysqli_fetch_assoc($result)) {
@@ -775,7 +775,7 @@ if (isset($_POST['update'])) {
                                 <label>Loan ID</label>
                                 <select name="loan_id" class="form-control">
                                     <?php
-                                    $conn = mysqli_connect("127.0.0.1", "root", "", "baiplus_final");
+                                    $conn = mysqli_connect("mysql", "root", "", "baiplus_final");
                                     $query = "SELECT loan_id FROM loan";
                                     $result = mysqli_query($conn, $query);
                                     while ($row = mysqli_fetch_assoc($result)) {
