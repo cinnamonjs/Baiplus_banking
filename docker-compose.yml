@@ -27,7 +27,8 @@ services:
     ports: 
       - "3306:3306"
     environment:
-      MYSQL_ALLOW_EMPTY_PASSWORD: yes
+      MYSQL_ALLOW_EMPTY_PASSWORD: true
+      MYSQL_ROOT_PASSWORD: ""
       MYSQL_DATABASE: baiplus_database
     networks:
       - app-network
