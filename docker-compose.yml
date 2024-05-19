@@ -30,6 +30,9 @@ services:
       MYSQL_DATABASE: baiplus_database
       MYSQL_PASSWORD: ""
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+    volumes:
+      - .mysql_data/baiplus_final.sql:/docker-entrypoint-initdb.d/baiplus_final.sql
+      - .mysql_data/baiplus_database.sql:/docker-entrypoint-initdb.d/baiplus_database.sql
     ports:
       - "3306:3306"
 
