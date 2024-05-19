@@ -5,7 +5,7 @@ $_SESSION['previous_page'] = basename($_SERVER['PHP_SELF']);
 $previousPage = $_SESSION['previous_page'] ?? 'unknown';
 
 // Database connection
-$servername = "localhost";
+$servername = "127.0.0.1";
 $username = "root";
 $password = "";
 $dbname = "baiplus_final";

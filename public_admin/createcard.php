@@ -13,7 +13,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $customer_ID = $_SESSION['customer_ID'];
 
         // Connect to the database
-        $con = mysqli_connect("localhost", "root", "", "baiplus_database");
+        $con = mysqli_connect("127.0.0.1", "root", "", "baiplus_database");
         if (!$con) {
             die("Connection failed: " . mysqli_connect_error());
         }

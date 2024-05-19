@@ -94,7 +94,7 @@
     $loggedInUserID = $_SESSION['customer_ID'];
 
     // Connect to the database
-    $connection = mysqli_connect("localhost", "root", "", "baiplus_database");
+    $connection = mysqli_connect("127.0.0.1", "root", "", "baiplus_database");
     if (!$connection) {
         die("Connection failed: " . mysqli_connect_error());
     }
