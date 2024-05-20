@@ -1,3 +1,16 @@
+<?php
+session_start();
+if (isset($_SESSION['customer_ID'])) {
+    $customer_ID = $_SESSION['customer_ID'];
+
+    // Connect to the database
+    $con = mysqli_connect("mysql", "root", "", "baiplus_database");
+    if (!$con) {
+        die("Connection failed: " . mysqli_connect_error());
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -88,17 +101,7 @@
         <div class="section account__container ">
             
             <?php
-            // Check if the customer ID is stored in the session
-            session_start();
-            if (isset($_SESSION['customer_ID'])) {
-                $customer_ID = $_SESSION['customer_ID'];
-
-                // Connect to the database
-                $con = mysqli_connect("mysql", "root", "", "baiplus_database");
-                if (!$con) {
-                    die("Connection failed: " . mysqli_connect_error());
-                }
-
+            if (isset($customer_ID)) {
                 // Retrieve account data for the logged-in customer
                 $sql = "SELECT * FROM account WHERE customer_ID = '$customer_ID'";
                 $result = mysqli_query($con, $sql);

@@ -1,3 +1,23 @@
+<?php
+session_start();
+
+// Check if the user is logged in
+if (!isset($_SESSION['customer_ID'])) {
+    // Redirect to login page or handle unauthorized access
+    header("Location: login.php");
+    exit;
+}
+
+// Retrieve the logged-in user's ID
+$loggedInUserID = $_SESSION['customer_ID'];
+
+// Connect to the database
+$connection = mysqli_connect("mysql", "root", "", "baiplus_database");
+if (!$connection) {
+    die("Connection failed: " . mysqli_connect_error());
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -81,19 +101,6 @@
         <div class="section__subtitle"></div>
 <div class="main-creditcard-container">
     <?php
-    session_start();
-
-    // Check if the user is logged in
-    if (!isset($_SESSION['customer_ID'])) {
-        // Redirect to login page or handle unauthorized access
-        header("Location: login.php");
-        exit;
-    }
-
-    // Retrieve the logged-in user's ID
-    $loggedInUserID = $_SESSION['customer_ID'];
-
-    // Connect to the database
     $connection = mysqli_connect("mysql", "root", "", "baiplus_database");
     if (!$connection) {
         die("Connection failed: " . mysqli_connect_error());

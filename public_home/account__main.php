@@ -1,3 +1,16 @@
+<?php
+session_start();
+if (isset($_SESSION['customer_ID'])) {
+    $customer_ID = $_SESSION['customer_ID'];
+
+    // Connect to the database
+    $con = mysqli_connect("mysql", "root", "", "baiplus_database");
+    if (!$con) {
+        die("Connection failed: " . mysqli_connect_error());
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -57,12 +70,9 @@
                         <li><a href="createcard.php">New Card</a></li>
                     </ul>
                 </li>
-
-
                 <li class="nav__btns">
                     <i class="uil uil-moon change-theme" id="theme-button"></i>
                 </li>
-
                 <li class="home__dropdown-link">
                     <div class="nav__acc-bg">
                         <div class="nav__img"><img src="Asset/img/avatar.svg"></div>
@@ -77,61 +87,45 @@
         </div>
     </nav>
 
-
-
-    <!--Prooerties -->
+    <!--Properties -->
     <img class="test-img3" src="Asset/img/account__bg.jpg">
     <section class="section section__account">
         <div class="section__bg">
-        <div class="section__title">My Account</div>
-        <div class="section__subtitle"></div>
+            <div class="section__title">My Account</div>
+            <div class="section__subtitle"></div>
         </div>
         <div class="account__grid2">
-
             <div class="account__center">
-
                 <div class="account__box-main">
-                <div class="content">
-                    
-                    <?php
-                    session_start();
-                    if (isset($_SESSION['customer_ID'])) {
-                        $customer_ID = $_SESSION['customer_ID'];
-        
-                        // Connect to the database
-                        $con = mysqli_connect("mysql", "root", "", "baiplus_database");
-                        if (!$con) {
-                            die("Connection failed: " . mysqli_connect_error());
+                    <div class="content">
+                        <?php
+                        if (isset($customer_ID)) {
+                            // Retrieve the main account data for the logged-in user
+                            $sql = "SELECT * FROM account WHERE customer_id = '$customer_ID' ";
+                            $result = $con->query($sql);
+
+                            if ($result->num_rows > 0) {
+                                $row = $result->fetch_assoc();
+                                $accountName = $row['account_name'];
+                                $accountBalance = $row['account_balance'];
+                                $bankName = $row['bank_id'];
+
+                                echo "<img src='Asset/img/avatar.svg' class='account__img' alt=''>";
+                                echo "<h3>$" . number_format($accountBalance, 2) . "</h3>";
+                                echo "<div class='content'>";
+                                echo "<div class='text'>";
+                                echo "<h3>$accountName</h3>";
+                                echo "<p><i class='bx bxs-bank'></i> $bankName</p>";
+                                echo "</div>";
+                                echo "</div>";
+                            } else {
+                                echo "<p>No main account found.</p>";
+                            }
+                            // Close the database connection
+                            $con->close();
                         }
-                    }
-
-                    // Retrieve the main account data for the logged-in user
-                    $customerId = ""; // Replace with the logged-in customer's ID
-                    $sql = "SELECT * FROM account WHERE customer_id = '$customer_ID' ";
-                    $result = $con->query($sql);
-
-                    if ($result->num_rows > 0) {
-                        $row = $result->fetch_assoc();
-                        $accountName = $row['account_name'];
-                        $accountBalance = $row['account_balance'];
-                        $bankName = $row['bank_id'];
-
-                        echo "<img src='Asset/img/avatar.svg' class='account__img' alt=''>";
-                        echo "<h3>$" . number_format($accountBalance, 2) . "</h3>";
-                        echo "<div class='content'>";
-                        echo "<div class='text'>";
-                        echo "<h3>$accountName</h3>";
-                        echo "<p><i class='bx bxs-bank'></i> $bankName</p>";
-                        echo "</div>";
-                        echo "</div>";
-                    } else {
-                        echo "<p>No main account found.</p>";
-                    }
-
-                    // Close the database connection
-                    $con->close();
-                    ?>
-                </div>
+                        ?>
+                    </div>
                 </div>
             </div>
 
@@ -171,12 +165,8 @@
                     <i class='fa-sharp fa-solid fa-user-plus account__icon' style="font-size: 1.55rem;"></i>
                     <h1>New Account</h1>
                 </a>
-
             </div>
         </div>
     </section>
-    </section>
-
 </body>
-
 </html>
