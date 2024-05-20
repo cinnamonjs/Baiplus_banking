@@ -31,10 +31,12 @@ services:
       MYSQL_PASSWORD: ""
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
     volumes:
-      - .mysql_data/baiplus_final.sql:/docker-entrypoint-initdb.d/baiplus_final.sql
-      - .mysql_data/baiplus_database.sql:/docker-entrypoint-initdb.d/baiplus_database.sql
+      - ./mysql_data/baiplus_final.sql:/docker-entrypoint-initdb.d/baiplus_final.sql
+      - ./mysql_data/baiplus_database.sql:/docker-entrypoint-initdb.d/baiplus_database.sql
     ports:
       - "3306:3306"
+    networks:
+      - app-network
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
@@ -44,6 +46,8 @@ services:
       PMA_HOST: mysql
     depends_on:
       - mysql
+    networks:
+      - app-network
 
 networks:
   app-network:
