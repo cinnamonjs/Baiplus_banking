@@ -4,7 +4,7 @@ $_SESSION['previous_page'] = basename($_SERVER['PHP_SELF']);
 $previousPage = $_SESSION['previous_page'] ?? 'unknown';
 require_once "db.php";
 
-$conn = mysqli_connect('localhost', 'root', '', 'baiplus_final');
+$conn = mysqli_connect('mysql', 'root', '', 'baiplus_final');
 
 $param1 = $_SESSION['param1']; // username
 $param2 = $_SESSION['param2']; // password

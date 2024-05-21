@@ -8,7 +8,7 @@ services:
     networks:
       - app-network
 
-  nginx:
+  nginx_home:
     image: nginx:latest
     ports:
       - "80:80"
@@ -16,6 +16,18 @@ services:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
       - ./nginx/snippets:/etc/nginx/snippets
       - ./public_home:/var/www/html/public_home
+    depends_on:
+      - php
+    networks:
+      - app-network
+    
+  nginx_admin:
+    image: nginx:latest
+    ports:
+      - "81:81"
+    volumes:
+      - ./nginx/nginx_admin.conf:/etc/nginx/nginx.conf
+      - ./nginx/snippets:/etc/nginx/snippets
       - ./public_admin:/var/www/html/public_admin
     depends_on:
       - php

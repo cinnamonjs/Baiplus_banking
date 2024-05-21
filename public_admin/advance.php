@@ -16,7 +16,7 @@ if ($param3 != 'Administrator' & $param3 != 'Manager') {
 }
 
 
-$conn = mysqli_connect('localhost', 'root', '', 'baiplus_final');
+$conn = mysqli_connect('mysql', 'root', '', 'baiplus_final');
 
 // Check connection
 if (!$conn) {

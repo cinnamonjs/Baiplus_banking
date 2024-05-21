@@ -107,7 +107,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
 }
 
 // Connect to the database
-$conn = mysqli_connect('localhost', 'root', '', 'baiplus_final');
+$conn = mysqli_connect('mysql', 'root', '', 'baiplus_final');
 
 // Check if the username and password match those in the database
 $query = "SELECT * FROM employee WHERE employee_username = '$username' AND employee_password = '$password'";
@@ -132,7 +132,7 @@ if (mysqli_num_rows($result) > 0) {
 
 
 
-        $conn = mysqli_connect('localhost', 'root', '', 'baiplus_final');
+        $conn = mysqli_connect('mysql', 'root', '', 'baiplus_final');
 
         // Check connection
         if (!$conn) {
